@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { RootObject as Character } from '../model/character';
+import { RootObject } from '../model/character';
+import { ChallengeService } from './challenge.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,8 @@ export class CharacterService {
 
     constructor(private http: HttpClient) {}
 
-    getCharacters(): Observable<Character> {
-        return this.http.get<Character>(this.baseUrl);
+    getCharacters(): Observable<RootObject> {
+        const url = `${this.baseUrl}?apiKey=${ChallengeService.publicKey}&ts=1&hash=${ChallengeService.getHash()}`;
+        return this.http.get<RootObject>(url);
     }
 }
