@@ -1,10 +1,34 @@
 <div class='container'>
-    <h1 class='text-center'>Challenge</h1>
+    <h1 class='text-center'>Angular Marvel Challenge</h1>
 
     <div *ngIf='characters' class='row'>
-        <div *ngFor='let character of characters' class='col-md-6'>
-            <h5>{{ character.name }}</h5>
-            <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" [alt]="character.name">
+        <div *ngFor='let character of characters' class='col-md-6 mb-3'>
+            <div class="row">
+                <div class="col">
+                    <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" [alt]="character.name">
+                </div>
+                <div class="col">
+                        <h4>{{ character.name }}</h4>
+
+                        <p *ngIf='character.description'>{{ character.description }}</p>
+
+                        <p *ngIf='!character.description'>
+                            <em>This character does not have a description.</em>
+                        </p>
+
+                        <button class="btn btn-primary">
+                            View more
+                        </button>
+                </div>
+            </div>
+
+            <h5>Related comics</h5>
+
+            <div class="row">
+                <div class="col-6 mb-1" *ngFor='let comic of character.comics.items.slice(0, 4)'>
+                    {{ comic.name }}
+                </div>
+            </div>
         </div>
     </div>
 </div>
