@@ -4,7 +4,7 @@
     <div *ngIf='characters' class='row'>
         <div *ngFor='let character of characters' class='col-md-6'>
             <h5>{{ character.name }}</h5>
-            <!-- <img [src]="character.thumbnail.path + character.thumbnail.extension" [alt]=""> -->
+            <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" [alt]="character.name">
         </div>
     </div>
 </div>

@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { RootObject } from '../model/character';
+import { CharacterResponse } from '../model/character';
 import { ChallengeService } from './challenge.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CharacterService {
-    private readonly baseUrl: string = 'http://gateway.marvel.com/v1/public/characters';
+    private readonly baseUrl: string = 'https://gateway.marvel.com/v1/public/characters';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) { }
 
-    getCharacters(): Observable<RootObject> {
-        const url = `${this.baseUrl}?apiKey=${ChallengeService.publicKey}&ts=1&hash=${ChallengeService.getHash()}`;
-        return this.http.get<RootObject>(url);
+    getCharacters(): Observable<CharacterResponse> {
+        const url: string = `${this.baseUrl}?ts=1&apikey=${ChallengeService.PublicKey}&hash=${ChallengeService.MD5Hash}`;
+
+        return this.http.get<CharacterResponse>(url);
     }
 }

@@ -1,11 +1,5 @@
-import {Md5} from 'ts-md5/dist/md5';
-
 export class ChallengeService {
-    public static publicKey: string = 'f1def8f826359cbe621637efac4cf74c';
-    private static privateKey: string = '7fc3dd9c612f602117833595018a48d4b0183d32';
-    public static maxResultsPerPage: number = 10;
-
-    public static getHash(): string {
-        return Md5.hashStr('1' + this.privateKey + this.publicKey).toString();
-    }
+    public static PublicKey: string = 'f1def8f826359cbe621637efac4cf74c';
+    public static MD5Hash: string = 'fda0c911fa2baa3c9a36f36433acb8b4';
+    public static MaxResultsPerPage: number = 10;
 }
