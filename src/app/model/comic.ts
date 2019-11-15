@@ -1,4 +1,40 @@
+export interface TextObject {
+    type: string;
+    language: string;
+    text: string;
+}
+
+export interface Url {
+    type: string;
+    url: string;
+}
+
+export interface Series {
+    resourceURI: string;
+    name: string;
+}
+
+export interface Variant {
+    resourceURI: string;
+    name: string;
+}
+
+export interface Date {
+    type: string;
+    date: Date;
+}
+
+export interface Price {
+    type: string;
+    price: number;
+}
+
 export interface Thumbnail {
+    path: string;
+    extension: string;
+}
+
+export interface Image {
     path: string;
     extension: string;
 }
@@ -6,9 +42,10 @@ export interface Thumbnail {
 export interface Item {
     resourceURI: string;
     name: string;
+    role: string;
 }
 
-export interface Comics {
+export interface Creators {
     available: number;
     collectionURI: string;
     items: Item[];
@@ -20,7 +57,7 @@ export interface Item2 {
     name: string;
 }
 
-export interface Series {
+export interface Characters {
     available: number;
     collectionURI: string;
     items: Item2[];
@@ -52,23 +89,36 @@ export interface Events {
     returned: number;
 }
 
-export interface Url {
-    type: string;
-    url: string;
-}
-
 export interface Result {
     id: number;
-    name: string;
+    digitalId: number;
+    title: string;
+    issueNumber: number;
+    variantDescription: string;
     description: string;
     modified: Date;
-    thumbnail: Thumbnail;
+    isbn: string;
+    upc: string;
+    diamondCode: string;
+    ean: string;
+    issn: string;
+    format: string;
+    pageCount: number;
+    textObjects: TextObject[];
     resourceURI: string;
-    comics: Comics;
+    urls: Url[];
     series: Series;
+    variants: Variant[];
+    collections: any[];
+    collectedIssues: any[];
+    dates: Date[];
+    prices: Price[];
+    thumbnail: Thumbnail;
+    images: Image[];
+    creators: Creators;
+    characters: Characters;
     stories: Stories;
     events: Events;
-    urls: Url[];
 }
 
 export interface Data {
@@ -79,7 +129,7 @@ export interface Data {
     results: Result[];
 }
 
-export interface CharacterListResponse {
+export interface ComicResponse {
     code: number;
     status: string;
     copyright: string;

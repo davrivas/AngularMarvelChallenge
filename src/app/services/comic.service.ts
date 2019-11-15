@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ChallengeService } from './challenge.service';
+import { ComicResponse } from '../model/comic';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +10,8 @@ import { ChallengeService } from './challenge.service';
 export class ComicService {
     constructor(private http: HttpClient, private challengeService: ChallengeService) {}
 
-    getComics(url: string): Observable<any> {
-        return this.http.get<any>(url);
+    getComic(url: string): Observable<ComicResponse> {
+        const finalUrl = `${url}?${this.challengeService.apiKeyHash}`;
+        return this.http.get<ComicResponse>(finalUrl);
     }
 }

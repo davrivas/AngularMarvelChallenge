@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Result as CharacterList } from './model/character-list';
+import { Component, OnInit, Input } from '@angular/core';
 import { Result as Character } from './model/character';
 import { CharacterService } from './services/character.service';
+import { Result as Comic } from './model/comic';
+import { ComicService } from './services/comic.service';
 
 @Component({
     selector: 'app-root',
@@ -9,11 +10,13 @@ import { CharacterService } from './services/character.service';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    characters: CharacterList[];
+    characters: Character[];
     selectedCharacter: Character;
-    selectedComic: any;
+    selectedComic: Comic;
 
-    constructor(private characterService: CharacterService) {}
+    @Input() search: string;
+
+    constructor(private characterService: CharacterService, private comicService: ComicService) {}
 
     ngOnInit(): void {
         this.characterService.getCharacters().subscribe(
@@ -22,14 +25,21 @@ export class AppComponent implements OnInit {
         );
     }
 
-    selectComic(url: string): void {
+    searchCharacter(): void {
+        console.log(this.search);
+    }
+
+    selectCharacter(url: string): void {
         this.characterService.getCharacter(url).subscribe(
             result => this.selectedCharacter = result.data.results[0],
             error => alert('An error occured')
         );
     }
 
-    selectCharacter(url: string): void {
-        console.log(url);
+    selectComic(url: string): void {
+        this.comicService.getComic(url).subscribe(
+            result => this.selectedComic = result.data.results[0],
+            error => alert('An error occured')
+        );
     }
 }
