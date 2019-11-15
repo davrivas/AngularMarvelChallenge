@@ -79,7 +79,7 @@ export interface Data {
     results: Result[];
 }
 
-export interface CharacterResponse {
+export interface CharacterListResponse {
     code: number;
     status: string;
     copyright: string;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CharacterListResponse } from '../model/character-list';
 import { CharacterResponse } from '../model/character';
 import { ChallengeService } from './challenge.service';
 
@@ -12,9 +13,15 @@ export class CharacterService {
 
     constructor(private http: HttpClient, private challengeService: ChallengeService) { }
 
-    getCharacters(): Observable<CharacterResponse> {
-        const url: string = `${this.baseUrl}?ts=1&apikey=${this.challengeService.publicKey}&hash=${this.challengeService.md5Hash}`;
+    getCharacters(): Observable<CharacterListResponse> {
+        const url: string = `${this.baseUrl}?${this.challengeService.apiKeyHash}`;
 
-        return this.http.get<CharacterResponse>(url);
+        return this.http.get<CharacterListResponse>(url);
+    }
+
+    getCharacter(url: string): Observable<CharacterResponse> {
+        const finalurl: string = `${url}?${this.challengeService.apiKeyHash}`;
+
+        return this.http.get<CharacterResponse>(finalurl);
     }
 }

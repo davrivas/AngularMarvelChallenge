@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Character } from './model/character';
+import { Result as CharacterList } from './model/character-list';
+import { Result as Character } from './model/character';
 import { CharacterService } from './services/character.service';
 
 @Component({
@@ -8,7 +9,9 @@ import { CharacterService } from './services/character.service';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    characters: Character[];
+    characters: CharacterList[];
+    selectedCharacter: Character;
+    selectedComic: any;
 
     constructor(private characterService: CharacterService) {}
 
@@ -17,5 +20,16 @@ export class AppComponent implements OnInit {
             result => this.characters = result.data.results,
             error => alert('An error occured')
         );
+    }
+
+    selectComic(url: string): void {
+        this.characterService.getCharacter(url).subscribe(
+            result => this.selectedCharacter = result.data.results[0],
+            error => alert('An error occured')
+        );
+    }
+
+    selectCharacter(url: string): void {
+        console.log(url);
     }
 }
