@@ -1,24 +1,39 @@
-<div class='container'>
-    <h1 class='text-center'>Angular Marvel Challenge</h1>
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-3">
+    <a class="navbar-brand" href="#">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Marvel-Comics-Logo.svg" alt="Marvel logo"
+            width="60" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <input class="form-control mr-2" type="search" placeholder="Search characters..." aria-label="Search">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+</nav>
+
+<div class='container'>
     <div *ngIf='characters' class='row'>
         <div *ngFor='let character of characters' class='col-md-6 mb-3'>
             <div class="row">
                 <div class="col">
-                    <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}" [alt]="character.name">
+                    <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}"
+                        [alt]="character.name">
                 </div>
                 <div class="col">
-                        <h4>{{ character.name }}</h4>
+                    <h4>{{ character.name }}</h4>
 
-                        <p *ngIf='character.description'>{{ character.description }}</p>
+                    <p *ngIf='character.description'>{{ character.description }}</p>
 
-                        <p *ngIf='!character.description'>
-                            <em>This character does not have a description.</em>
-                        </p>
+                    <p *ngIf='!character.description'>
+                        <em>This character does not have a description.</em>
+                    </p>
 
-                        <button class="btn btn-primary">
-                            View more
-                        </button>
+                    <button class="btn btn-primary">
+                        View more
+                    </button>
                 </div>
             </div>
 
