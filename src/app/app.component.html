@@ -9,12 +9,19 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline my-2">
-            <input [(ngModel)]='search' class="form-control mr-2" type="search" placeholder="Search characters..." aria-label="Search">
-            <button class="btn btn-dark" (click)='searchCharacter()'>
-                <img src="assets/images/icons/search.png" alt="Search icon" width="30" width="30">
-            </button>
-        </form>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-11">
+                    <input class="form-control" placeholder="Search characters..." aria-label="Search"
+                        [(ngModel)]='nameStartsWith'>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-dark" (click)='searchCharacter()'>
+                        <img src="assets/images/icons/search.png" alt="Search icon" width="30" width="30">
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -29,10 +36,10 @@
                     </div>
                 </div>
                 <div class="col">
-                    <select class="form-control">
+                    <select class="form-control" (change)='onOrderByChange($event.target.value)'>
                         <option value>Sort by</option>
                         <option value="name">Name</option>
-                        <option value="date">Date</option>
+                        <option value="modified">Date</option>
                     </select>
                 </div>
             </div>
@@ -47,6 +54,8 @@
 
                         <div class="col">
                             <h4>{{ character.name }}</h4>
+
+                            <p><em>Date: {{ character.modified | date }}</em></p>
 
                             <p *ngIf='character.description'>{{ character.description }}</p>
 
@@ -82,68 +91,92 @@
     </div>
 </div>
 
-<div class="modal fade" id="comicModal" tabindex="-1" role="dialog" aria-labelledby="comicModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 *ngIf='selectComic' class="modal-title" id="comicModalLabel">{{ selectedComic.title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div *ngIf='selectComic' class="row">
-                    <div class="col">
-                        <img class='img-fluid'
-                            src="{{selectedComic.thumbnail.path}}.{{selectedComic.thumbnail.extension}}"
-                            [alt]='selectedComic.title'>
-                    </div>
-                    <div class="col">
-                        <p *ngIf='selectedComic.description'>{{ selectedComic.description }}</p>
-
-                        <p *ngIf='!selectedComic.description'><em>This character does not have a description.</em></p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add to favorites</button>
-                <button type="button" class="btn btn-primary">Buy for $#.##</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="characterModal" tabindex="-1" role="dialog" aria-labelledby="characterModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div *ngIf='selectCharacter' class="modal-content">
             <div class="modal-header">
-                <h5 *ngIf='selectedCharacter' class="modal-title" id="characterModalLabel">
-                    {{ selectedCharacter.name }}
+                <h5 class="modal-title" id="characterModalLabel">
+                    <span *ngIf='selectedCharacter'>{{ selectedCharacter.name }}</span>
+                    <span *ngIf='!selectedCharacter'>Character detail</span>
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)='clearCharacter()'>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf='selectedCharacter' class="row">
-                    <div class="col">
-                        <img class="img-fluid"
-                            src="{{selectedCharacter.thumbnail.path}}.{{selectedCharacter.thumbnail.extension}}"
-                            [alt]='selectedCharacter.name'>
-                    </div>
-                    <div class="col">
-                        <p *ngIf='selectedCharacter.description'>{{ selectedCharacter.description }}</p>
+                <div *ngIf='selectedCharacter'>
+                    <div class="row">
+                        <div class="col">
+                            <img class="img-fluid"
+                                src="{{selectedCharacter.thumbnail.path}}.{{selectedCharacter.thumbnail.extension}}"
+                                [alt]='selectedCharacter.name'>
+                        </div>
+                        <div class="col">
+                            <p *ngIf='selectedCharacter.description'>{{ selectedCharacter.description }}</p>
 
-                        <p *ngIf='!selectedCharacter.description'>
-                            <em>This character does not have a description.</em>
-                        </p>
+                            <p *ngIf='!selectedCharacter.description'>
+                                <em>This character does not have a description.</em>
+                            </p>
+                        </div>
                     </div>
+                    <div *ngIf='selectedCharacter.urls'>
+                        <h6>Urls</h6>
+                        <a *ngFor='let url of selectedCharacter.urls' [href]='url.url' target="_blank" title="See {{ selectedCharacter.name}}'s {{ url.type }}">
+                            {{ url.type }}
+                        </a><br>
+                    </div>
+                </div>
+
+                <div *ngIf='!selectedCharacter'>
+                    Loading character information...
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='clearCharacter()'>
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="comicModal" tabindex="-1" role="dialog" aria-labelledby="comicModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="comicModalLabel">
+                    <span *ngIf='selectedComic'>{{ selectedComic.title }}</span>
+                    <span *ngIf='!selectedComic'>Comic detail</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)='clearComic()'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf='selectedComic'>
+                    <div class="row">
+                        <div class="col">
+                            <img class='img-fluid'
+                                src="{{selectedComic.thumbnail.path}}.{{selectedComic.thumbnail.extension}}"
+                                [alt]='selectedComic.title'>
+                        </div>
+                        <div class="col">
+                            <p *ngIf='selectedComic.description'>{{ selectedComic.description }}</p>
+
+                            <p *ngIf='!selectedComic.description'><em>This character does not have a description.</em>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf='!selectedComic'>
+                    Loading comic information...
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf='selectedComic' type="button" class="btn btn-primary">Add to favorites</button>
+                <!-- <button *ngIf='selectedComic' type="button" class="btn btn-primary">Buy for $#.##</button> -->
             </div>
         </div>
     </div>

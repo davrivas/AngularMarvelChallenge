@@ -8,5 +8,9 @@ export class ChallengeService {
     private readonly md5Hash: string = 'fda0c911fa2baa3c9a36f36433acb8b4';
     public readonly apiKeyHash: string = `ts=1&apikey=${this.publicKey}&hash=${this.md5Hash}`;
 
-    public readonly maxResultsPerPage: number = 10;
+    public readonly maxResults: number = 10;
+
+    IsNullOrWhiteSpace(value: string): boolean {
+        return value === undefined || value === null || value.trim().length === 0;
+    }
 }

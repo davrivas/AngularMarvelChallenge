@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CharacterResponse } from '../model/character';
 import { ChallengeService } from './challenge.service';
@@ -12,8 +12,24 @@ export class CharacterService {
 
     constructor(private http: HttpClient, private challengeService: ChallengeService) { }
 
-    getCharacters(name: string = ''): Observable<CharacterResponse> {
-        const url: string = `${this.baseUrl}?${this.challengeService.apiKeyHash}`;
+    getCharacters(nameStartsWith: string = null, orderBy: string = null, offset: number = null): Observable<CharacterResponse> {
+        let url: string = `${this.baseUrl}?`;
+
+        if (!this.challengeService.IsNullOrWhiteSpace(nameStartsWith)) {
+            url += `nameStartsWith=${nameStartsWith}&`;
+        }
+
+        if (!this.challengeService.IsNullOrWhiteSpace(orderBy)) {
+            url += `orderBy=${orderBy}&`;
+        }
+
+        url += `limit=${this.challengeService.maxResults.toString()}&`;
+
+        if (offset != null) {
+            url += `offset=${offset.toString()}&`;
+        }
+
+        url += this.challengeService.apiKeyHash;
 
         return this.http.get<CharacterResponse>(url);
     }
