@@ -38,14 +38,16 @@
                 <div class="col">
                     <select class="form-control" (change)='onOrderByChange($event.target.value)'>
                         <option value>Sort by</option>
-                        <option value="name">Name</option>
-                        <option value="modified">Date</option>
+                        <option value="name">Name ascending</option>
+                        <option value="-name">Name descending</option>
+                        <option value="modified">Date modified ascending</option>
+                        <option value="-modified">Date modified descending</option>
                     </select>
                 </div>
             </div>
 
             <div *ngIf='characters' class='row'>
-                <div *ngFor='let character of characters' class='col-md-6 mb-3'>
+                <div *ngFor='let character of characters' class='col-lg-6 mb-3'>
                     <div class="row mb-2">
                         <div class="col">
                             <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}"
@@ -57,7 +59,7 @@
 
                             <p><em>Date: {{ character.modified | date }}</em></p>
 
-                            <p *ngIf='character.description'>{{ character.description }}</p>
+                            <p *ngIf='character.description' [innerHTML]='character.description'></p>
 
                             <p *ngIf='!character.description'><em>This character does not have a description.</em></p>
 
@@ -70,13 +72,17 @@
 
                     <h5>Related comics</h5>
 
-                    <div class="row">
+                    <div *ngIf='character.comics.items.slice(0, 4).length > 0' class="row">
                         <div class="col-6 mb-1" *ngFor='let comic of character.comics.items.slice(0, 4)'>
                             <span class="comic-item" title="See details" data-toggle="modal" data-target="#comicModal"
                                 (click)='selectComic(comic.resourceURI)'>
                                 {{ comic.name }}
                             </span>
                         </div>
+                    </div>
+
+                    <div *ngIf='character.comics.items.slice(0, 4).length === 0'>
+                        <small>This character does not have related comics</small>
                     </div>
                 </div>
             </div>
@@ -85,7 +91,21 @@
             <div class="row">
                 <img src="assets/images/icons/btn-favourites-primary.png" alt="Characters icon" width="30" height="30"
                     class="mr-1">
-                <h3>My favourites</h3>
+                <h3>My favourites ({{ !favouriteComics ? 0 : favouriteComics.length }})</h3>
+            </div>
+
+            <div *ngIf='favouriteComics' class='row'>
+                <div *ngFor='let favouriteComic of favouriteComics' class="col-lg-6 mb-3">
+                    <img src="{{favouriteComic.thumbnail.path}}.{{favouriteComic.thumbnail.extension}}"
+                        [alt]='favouriteComic.title' class="img-fluid comic-thumbnail">
+                    <img src="assets/images/icons/btn-delete.png" alt="Delete {{favouriteComic.title}} from favourites"
+                        class="delete-button" title="Delete {{favouriteComic.title}} from favourites"
+                        (click)='removeFavourite(favouriteComic.id)'>
+                </div>
+            </div>
+
+            <div *ngIf='!favouriteComics || favouriteComics.length === 0'>
+                <p class="text-center">You don't have any favourite comics</p>
             </div>
         </div>
     </div>
@@ -114,7 +134,7 @@
                                 [alt]='selectedCharacter.name'>
                         </div>
                         <div class="col">
-                            <p *ngIf='selectedCharacter.description'>{{ selectedCharacter.description }}</p>
+                            <p *ngIf='selectedCharacter.description' [innerHTML]='selectedCharacter.description'></p>
 
                             <p *ngIf='!selectedCharacter.description'>
                                 <em>This character does not have a description.</em>
@@ -123,7 +143,8 @@
                     </div>
                     <div *ngIf='selectedCharacter.urls'>
                         <h6>Urls</h6>
-                        <a *ngFor='let url of selectedCharacter.urls' [href]='url.url' target="_blank" title="See {{ selectedCharacter.name}}'s {{ url.type }}">
+                        <a *ngFor='let url of selectedCharacter.urls' [href]='url.url' target="_blank"
+                            title="See {{ selectedCharacter.name}}'s {{ url.type }}">
                             {{ url.type }}
                         </a><br>
                     </div>
@@ -165,7 +186,7 @@
                                 [alt]='selectedComic.title'>
                         </div>
                         <div class="col">
-                            <p *ngIf='selectedComic.description'>{{ selectedComic.description }}</p>
+                            <p *ngIf='selectedComic.description' [innerHTML]='selectedComic.description'></p>
 
                             <p *ngIf='!selectedComic.description'><em>This character does not have a description.</em>
                             </p>
@@ -177,8 +198,16 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button *ngIf='selectedComic' type="button" class="btn btn-primary">Add to favorites</button>
-                <!-- <button *ngIf='selectedComic' type="button" class="btn btn-primary">Buy for $#.##</button> -->
+                <button *ngIf='selectedComic && !isFavourite(selectedComic.id)' type="button" class="btn btn-primary"
+                    (click)='addFavourite(selectedComic)'>
+                    Add to favorites
+                </button>
+                <button *ngIf='selectedComic && isFavourite(selectedComic.id)' type="button" class="btn btn-primary"
+                    (click)='removeFavourite(selectedComic.id)'>
+                    Remove from favorites
+                </button>
+                <button *ngIf='selectedComic' type="button" class="btn btn-primary">Buy for
+                    {{ selectedComic.prices[0].price | currency }}</button>
             </div>
         </div>
     </div>

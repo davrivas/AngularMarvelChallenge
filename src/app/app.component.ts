@@ -12,7 +12,7 @@ import { ChallengeService } from './services/challenge.service';
 })
 export class AppComponent implements OnInit {
     characters: Character[];
-    favoriteComics: Comic[];
+    favouriteComics: Comic[];
     selectedCharacter: Character;
     selectedComic: Comic;
 
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
 
     constructor(private challengeService: ChallengeService,
                 private characterService: CharacterService,
-                private comicService: ComicService) {}
+                private comicService: ComicService) { }
 
     ngOnInit(): void {
         this.characterService.getCharacters().subscribe(
@@ -94,5 +94,25 @@ export class AppComponent implements OnInit {
 
     clearComic(): void {
         this.selectedComic = null;
+    }
+
+    isFavourite(id: number): boolean {
+        if (this.favouriteComics === null || this.favouriteComics === undefined) {
+            return false;
+        }
+
+        return this.favouriteComics.some(x => x.id === id);
+    }
+
+    addFavourite(comic: Comic): void {
+        if (this.favouriteComics === undefined || this.favouriteComics === null || this.favouriteComics.length === 0) {
+            this.favouriteComics = [comic];
+        } else {
+            this.favouriteComics.push(comic);
+        }
+    }
+
+    removeFavourite(id: number): void {
+        this.favouriteComics = this.favouriteComics.filter(x => x.id !== id);
     }
 }
