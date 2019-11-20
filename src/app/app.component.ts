@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
     }
 
     hasMoreCharacters(): boolean {
-        return this.characters && this.characters.length <= this.total;
+        return this.characters && this.characters.length <= this.total - 1;
     }
 
     loadMore(): void {
