@@ -16,17 +16,39 @@ export class AppComponent implements OnInit {
     selectedCharacter: Character;
     selectedComic: Comic;
 
+    readonly date: Date;
+
+    isBusyCharacterList: boolean;
+    isBusyCharacter: boolean;
+    isBusyComic: boolean;
+
     nameStartsWith: string;
     orderBy: string;
     offset: number;
+    total: number;
 
-    constructor(private challengeService: ChallengeService,
-                private characterService: CharacterService,
-                private comicService: ComicService) { }
+    constructor(private challengeService: ChallengeService, private characterService: CharacterService,
+                private comicService: ComicService) {
+        this.isBusyCharacterList = false;
+        this.isBusyCharacter = false;
+        this.isBusyComic = false;
+        this.date = new Date();
+    }
 
     ngOnInit(): void {
-        this.characterService.getCharacters().subscribe(
-            result => this.characters = result.data.results,
+        this.getCharacters(false);
+    }
+
+    private getCharacters(isLoadingMore: boolean) {
+        this.offset = isLoadingMore ? this.offset : null;
+
+        this.characterService.getCharacters(this.nameStartsWith, this.orderBy, this.offset).subscribe(
+            result => {
+                this.isBusyCharacterList = false;
+                this.total = isLoadingMore ? this.total : result.data.total;
+                this.characters = isLoadingMore ? this.characters.concat(result.data.results) : result.data.results;
+                this.isBusyCharacterList = false;
+            },
             error => alert('An error occured')
         );
     }
@@ -42,10 +64,7 @@ export class AppComponent implements OnInit {
             this.offset = null;
         }
 
-        this.characterService.getCharacters(this.nameStartsWith, this.orderBy, this.offset).subscribe(
-            result => this.characters = result.data.results,
-            error => alert('An error occured')
-        );
+        this.getCharacters(false);
     }
 
     onOrderByChange(value: string): void {
@@ -60,19 +79,29 @@ export class AppComponent implements OnInit {
             this.offset = null;
         }
 
-        this.characterService.getCharacters(this.nameStartsWith, this.orderBy, this.offset).subscribe(
-            result => this.characters = result.data.results,
-            error => alert('An error occured')
-        );
+        this.getCharacters(false);
+    }
+
+    hasMoreCharacters(): boolean {
+        return this.characters && this.characters.length <= this.total;
+    }
+
+    loadMore(): void {
+        this.offset = (this.characters.length * this.total) / this.total;
+        this.getCharacters(true);
     }
 
     selectCharacter(url: string): void {
-        if (this.selectedCharacter !== null) {
+        if (this.selectedCharacter !== null || this.selectedCharacter !== undefined) {
             this.clearCharacter();
         }
 
         this.characterService.getCharacter(url).subscribe(
-            result => this.selectedCharacter = result.data.results[0],
+            result => {
+                this.isBusyCharacter = true;
+                this.selectedCharacter = result.data.results[0];
+                this.isBusyCharacter = false;
+            },
             error => alert('An error occured')
         );
     }
@@ -82,12 +111,16 @@ export class AppComponent implements OnInit {
     }
 
     selectComic(url: string): void {
-        if (this.selectedComic !== null) {
+        if (this.selectedComic !== null || this.selectedComic !== undefined) {
             this.clearComic();
         }
 
         this.comicService.getComic(url).subscribe(
-            result => this.selectedComic = result.data.results[0],
+            result => {
+                this.isBusyComic = true;
+                this.selectedComic = result.data.results[0];
+                this.isBusyComic = false;
+            },
             error => alert('An error occured')
         );
     }
@@ -99,13 +132,17 @@ export class AppComponent implements OnInit {
     isFavourite(id: number): boolean {
         if (this.favouriteComics === null || this.favouriteComics === undefined) {
             return false;
+        } else if (this.favouriteComics.length === 0) {
+            return false;
         }
 
         return this.favouriteComics.some(x => x.id === id);
     }
 
     addFavourite(comic: Comic): void {
-        if (this.favouriteComics === undefined || this.favouriteComics === null || this.favouriteComics.length === 0) {
+        if (this.favouriteComics === undefined || this.favouriteComics === null) {
+            this.favouriteComics = [comic];
+        } else if (this.favouriteComics.length === 0) {
             this.favouriteComics = [comic];
         } else {
             this.favouriteComics.push(comic);
