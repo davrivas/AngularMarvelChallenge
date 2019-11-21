@@ -19,8 +19,10 @@ export class AppComponent implements OnInit {
     readonly date: Date;
 
     isBusyCharacterList: boolean;
+    isBusyLoadingMore: boolean;
     isBusyCharacter: boolean;
     isBusyComic: boolean;
+    results: string;
 
     nameStartsWith: string;
     orderBy: string;
@@ -29,9 +31,6 @@ export class AppComponent implements OnInit {
 
     constructor(private challengeService: ChallengeService, private characterService: CharacterService,
                 private comicService: ComicService) {
-        this.isBusyCharacterList = false;
-        this.isBusyCharacter = false;
-        this.isBusyComic = false;
         this.date = new Date();
     }
 
@@ -40,16 +39,40 @@ export class AppComponent implements OnInit {
     }
 
     private getCharacters(isLoadingMore: boolean) {
+        if (isLoadingMore) {
+            this.isBusyLoadingMore = true;
+        } else {
+            this.isBusyCharacterList = true;
+        }
+
         this.offset = isLoadingMore ? this.offset : null;
 
         this.characterService.getCharacters(this.nameStartsWith, this.orderBy, this.offset).subscribe(
             result => {
-                this.isBusyCharacterList = false;
                 this.total = isLoadingMore ? this.total : result.data.total;
                 this.characters = isLoadingMore ? this.characters.concat(result.data.results) : result.data.results;
-                this.isBusyCharacterList = false;
+                if (isLoadingMore) {
+                    this.isBusyLoadingMore = false;
+                } else {
+                    this.isBusyCharacterList = false;
+
+                    this.results = 'Results';
+
+                    if (!this.challengeService.IsNullOrWhiteSpace(this.nameStartsWith)) {
+                        this.results += ` for <strong>'${this.nameStartsWith}'</strong>`;
+                    }
+
+                    this.results += `: ${this.total}`;
+                }
             },
-            error => alert('An error occured')
+            error => {
+                alert('An error occured');
+                if (isLoadingMore) {
+                    this.isBusyLoadingMore = false;
+                } else {
+                    this.isBusyCharacterList = false;
+                }
+            }
         );
     }
 
@@ -83,10 +106,10 @@ export class AppComponent implements OnInit {
     }
 
     hasMoreCharacters(): boolean {
-        return this.characters && this.characters.length <= this.total - 1;
+        return this.characters.length <= this.total - 1;
     }
 
-    loadMore(): void {
+    loadMoreCharacters(): void {
         this.offset = (this.characters.length * this.total) / this.total;
         this.getCharacters(true);
     }
@@ -96,13 +119,16 @@ export class AppComponent implements OnInit {
             this.clearCharacter();
         }
 
+        this.isBusyCharacter = true;
         this.characterService.getCharacter(url).subscribe(
             result => {
-                this.isBusyCharacter = true;
                 this.selectedCharacter = result.data.results[0];
                 this.isBusyCharacter = false;
             },
-            error => alert('An error occured')
+            error => {
+                alert('An error occured');
+                this.isBusyCharacter = false;
+            }
         );
     }
 
@@ -115,13 +141,16 @@ export class AppComponent implements OnInit {
             this.clearComic();
         }
 
+        this.isBusyComic = true;
         this.comicService.getComic(url).subscribe(
             result => {
-                this.isBusyComic = true;
                 this.selectedComic = result.data.results[0];
                 this.isBusyComic = false;
             },
-            error => alert('An error occured')
+            error => {
+                alert('An error occured');
+                this.isBusyCharacter = false;
+            }
         );
     }
 
