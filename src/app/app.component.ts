@@ -24,9 +24,10 @@ export class AppComponent implements OnInit {
     isBusyComic: boolean;
     results: string;
 
-    nameStartsWith: string;
-    orderBy: string;
-    offset: number;
+    search: string;
+    private nameStartsWith: string;
+    private orderBy: string;
+    private offset: number;
     total: number;
 
     constructor(private challengeService: ChallengeService, private characterService: CharacterService,
@@ -79,6 +80,12 @@ export class AppComponent implements OnInit {
 
     searchCharacter(): void {
         this.characters = null;
+
+        if (!this.challengeService.IsNullOrWhiteSpace(this.search)) {
+            this.nameStartsWith = this.search;
+        } else {
+            this.nameStartsWith = null;
+        }
 
         if (this.challengeService.IsNullOrWhiteSpace(this.orderBy)) {
             this.orderBy = null;
