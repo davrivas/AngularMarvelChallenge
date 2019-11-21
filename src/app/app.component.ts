@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
             result => {
                 this.total = isLoadingMore ? this.total : result.data.total;
                 this.characters = isLoadingMore ? this.characters.concat(result.data.results) : result.data.results;
+
                 if (isLoadingMore) {
                     this.isBusyLoadingMore = false;
                 } else {
