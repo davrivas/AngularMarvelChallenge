@@ -1,0 +1,82 @@
+<!-- <div class="row mb-1">
+    <div class="col">
+        <div class="row">
+            <img src="assets/images/icons/characters.png" alt="Characters icon" width="30" height="30">
+            <h3>Characters</h3>
+        </div>
+    </div>
+    <div class="col">
+        <select class="form-control" (change)='onOrderByChange($event.target.value)'>
+            <option value>Sort by</option>
+            <option value="name">Name ascending</option>
+            <option value="-name">Name descending</option>
+            <option value="modified">Date modified ascending</option>
+            <option value="-modified">Date modified descending</option>
+        </select>
+    </div>
+</div>
+
+<div *ngIf='!isBusyCharacterList'>
+    <div *ngIf='characters'>
+        <p [innerHTML]='results'></p>
+
+        <div class='row'>
+            <div *ngFor='let character of characters' class='col-lg-6 mb-3'>
+                <div class="row mb-2">
+                    <div class="col">
+                        <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}"
+                            [alt]="character.name">
+                    </div>
+
+                    <div class="col">
+                        <h4>{{ character.name }}</h4>
+
+                        <p><em>Date: {{ character.modified | date }}</em></p>
+
+                        <p *ngIf='character.description' [innerHTML]='character.description'
+                            class="character-description"></p>
+
+                        <p *ngIf='!character.description'><em>This character does not have a
+                                description.</em>
+                        </p>
+
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#characterModal"
+                            (click)='selectCharacter(character.resourceURI)'>
+                            View more
+                        </button>
+                    </div>
+                </div>
+
+                <h5>Related comics</h5>
+
+                <div *ngIf='character.comics.items.slice(0, 4).length > 0' class="row">
+                    <div class="col-6 mb-1" *ngFor='let comic of character.comics.items.slice(0, 4)'>
+                        <span class="comic-item" title="See details" data-toggle="modal" data-target="#comicModal"
+                            (click)='selectComic(comic.resourceURI)'>
+                            {{ comic.name }}
+                        </span>
+                    </div>
+                </div>
+
+                <div *ngIf='character.comics.items.slice(0, 4).length === 0'>
+                    <small>This character does not have related comics</small>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf='hasMoreCharacters()' class="d-flex justify-content-center">
+            <button class="btn btn-secondary" (click)='loadMoreCharacters()' [disabled]='isBusyLoadingMore'>
+                <span *ngIf='!isBusyLoadingMore'>Load more characters</span>
+                <span *ngIf='isBusyLoadingMore'>Loading more characters...</span>
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf='!characters || characters.length === 0'>
+        <p class="text-center">There are no characters</p>
+    </div>
+</div>
+
+<div *ngIf='isBusyCharacterList'>
+    <p class="text-center">Loading characters...</p>
+</div> -->

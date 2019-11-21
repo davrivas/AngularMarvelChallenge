@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { CharacterModule } from './character/character.module';
+import { ComicModule } from './comic/comic.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CharacterModule,
+    ComicModule
   ],
   providers: [],
   bootstrap: [AppComponent]

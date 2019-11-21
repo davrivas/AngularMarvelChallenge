@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ChallengeService } from './challenge.service';
-import { ComicResponse } from '../model/comic';
+import { ChallengeService } from '../../shared/services/challenge.service';
+import { ComicResponse } from '../../model/comic';
 
 @Injectable({
     providedIn: 'root'

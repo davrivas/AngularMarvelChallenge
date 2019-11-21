@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Result as Character } from './model/character';
-import { CharacterService } from './services/character.service';
+import { CharacterService } from './character/services/character.service';
 import { Result as Comic } from './model/comic';
-import { ComicService } from './services/comic.service';
-import { ChallengeService } from './services/challenge.service';
+import { ComicService } from './comic/services/comic.service';
+import { ChallengeService } from './shared/services/challenge.service';
 
 @Component({
-    selector: 'app-root',
+    selector: 'amc-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
