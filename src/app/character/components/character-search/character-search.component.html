@@ -1,0 +1,26 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-3">
+    <a class="navbar-brand" href="#">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Marvel-Comics-Logo.svg" alt="Marvel logo"
+            width="60" height="30">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-11">
+                    <input class="form-control" placeholder="Search characters..." aria-label="Search"
+                        [(ngModel)]='characterService.search'>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-dark" (click)='characterService.searchCharactersByName()'>
+                        <img src="assets/images/icons/search.png" alt="Search icon" width="30" width="30">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

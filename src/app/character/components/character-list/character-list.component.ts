@@ -1,4 +1,6 @@
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, Input } from '@angular/core';
+import { CharacterService } from '../../services/character.service';
+import { ComicService } from 'src/app/comic/services/comic.service';
 
 @Component({
     selector: 'amc-character-list',
@@ -6,7 +8,10 @@ import { OnInit, Component } from '@angular/core';
     styleUrls: ['./character-list.component.css']
 })
 export class CharacterListComponent implements OnInit {
-    ngOnInit() {
-        //
+    @Input() characterService: CharacterService;
+    @Input() comicService: ComicService;
+
+    ngOnInit(): void {
+        this.characterService.searchCharacters(false);
     }
 }

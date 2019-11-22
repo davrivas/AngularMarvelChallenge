@@ -1,12 +1,11 @@
-import { OnInit, Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ComicService } from '../../services/comic.service';
 
 @Component({
     selector: 'amc-favourite-comics',
-    templateUrl: './character-detail.component.html',
-    styleUrls: ['./character-detail.component.css']
+    templateUrl: './favourite-comics.component.html',
+    styleUrls: ['./favourite-comics.component.css']
 })
-export class FavouriteComicsComponent implements OnInit {
-    ngOnInit() {
-        //
-    }
+export class FavouriteComicsComponent {
+    @Input() comicService: ComicService;
 }

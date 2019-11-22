@@ -1,37 +1,13 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark mb-3">
-    <a class="navbar-brand" href="#">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Marvel-Comics-Logo.svg" alt="Marvel logo"
-            width="60" height="30">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-11">
-                    <input class="form-control" placeholder="Search characters..." aria-label="Search"
-                        [(ngModel)]='search'>
-                </div>
-                <div class="col-1">
-                    <button class="btn btn-dark" (click)='searchCharacter()'>
-                        <img src="assets/images/icons/search.png" alt="Search icon" width="30" width="30">
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+<amc-character-search [characterService]='characterService'></amc-character-search>
 
 <div class='container'>
     <div class="row mb-3">
         <div class="col-md-9">
-            <!-- <amc-character-list></amc-character-list> -->
+            <amc-character-list [characterService]='characterService' [comicService]='comicService'>
+            </amc-character-list>
         </div>
         <div class="col-md-3">
-            <!-- <amc-favourite-comics></amc-favourite-comics> -->
+            <amc-favourite-comics [comicService]='comicService'></amc-favourite-comics>
         </div>
     </div>
 
@@ -41,6 +17,6 @@
     </footer>
 </div>
 
-<!-- <amc-character-detail></amc-character-detail> -->
+<amc-character-detail [characterService]='characterService'></amc-character-detail>
 
-<!-- <amc-comic-detail></amc-comic-detail> -->
+<amc-comic-detail [comicService]='comicService' [characterService]='characterService'></amc-comic-detail>

@@ -1,0 +1,8 @@
+.character-description {
+    height: 100px;
+    overflow-y: scroll;
+}
+
+.comic-item {
+    cursor: pointer;
+}
