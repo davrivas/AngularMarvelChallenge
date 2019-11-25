@@ -4,8 +4,7 @@ import { CharacterService } from 'src/app/character/services/character.service';
 
 @Component({
     selector: 'amc-comic-detail',
-    templateUrl: './comic-detail.component.html',
-    styleUrls: ['./comic-detail.component.css']
+    templateUrl: './comic-detail.component.html'
 })
 export class ComicDetailComponent {
     @Input() comicService: ComicService;

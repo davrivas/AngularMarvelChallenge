@@ -4,8 +4,7 @@ import { ComicService } from 'src/app/comic/services/comic.service';
 
 @Component({
     selector: 'amc-character-list',
-    templateUrl: './character-list.component.html',
-    styleUrls: ['./character-list.component.css']
+    templateUrl: './character-list.component.html'
 })
 export class CharacterListComponent implements OnInit {
     @Input() characterService: CharacterService;
@@ -13,5 +12,6 @@ export class CharacterListComponent implements OnInit {
 
     ngOnInit(): void {
         this.characterService.searchCharacters(false);
+        // this.characterService.isBusyCharacterList = true;
     }
 }

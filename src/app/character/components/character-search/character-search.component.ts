@@ -3,8 +3,7 @@ import { CharacterService } from '../../services/character.service';
 
 @Component({
     selector: 'amc-character-search',
-    templateUrl: './character-search.component.html',
-    styleUrls: ['./character-search.component.css']
+    templateUrl: './character-search.component.html'
 })
 export class CharacterSearchComponent {
     @Input() characterService: CharacterService;

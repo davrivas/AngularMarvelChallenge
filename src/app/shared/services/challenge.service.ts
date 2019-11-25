@@ -13,4 +13,8 @@ export class ChallengeService {
     IsNullOrWhiteSpace(value: string): boolean {
         return value === undefined || value === null || value.trim().length === 0;
     }
+
+    IsNullOrEmpty(value: any[]): boolean {
+        return value === null || value === undefined || value.length === 0;
+    }
 }

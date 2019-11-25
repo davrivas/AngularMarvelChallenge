@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ChallengeService } from '../../shared/services/challenge.service';
-import { ComicResponse, Result as Comic } from '../../model/comic';
+import { ComicResponse, Result as Comic } from '../model/comic';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ export class ComicService {
     selectedComic: Comic;
     isBusyComic: boolean;
 
-    constructor(private http: HttpClient, private challengeService: ChallengeService) {}
+    constructor(private http: HttpClient, private challengeService: ChallengeService) { }
 
     selectComic(url: string): void {
         if (this.selectedComic !== null || this.selectedComic !== undefined) {
@@ -37,9 +37,7 @@ export class ComicService {
     }
 
     isFavourite(id: number): boolean {
-        if (this.favouriteComics === null || this.favouriteComics === undefined) {
-            return false;
-        } else if (this.favouriteComics.length === 0) {
+        if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
             return false;
         }
 
@@ -47,9 +45,7 @@ export class ComicService {
     }
 
     addFavourite(comic: Comic): void {
-        if (this.favouriteComics === undefined || this.favouriteComics === null) {
-            this.favouriteComics = [comic];
-        } else if (this.favouriteComics.length === 0) {
+        if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
             this.favouriteComics = [comic];
         } else {
             this.favouriteComics.push(comic);

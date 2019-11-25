@@ -1,18 +1,20 @@
-<div *ngIf='!characterService.isBusyCharacterList && characterService.characters' class="modal fade" id="characterModal" tabindex="-1" role="dialog"
-    aria-labelledby="characterModalLabel" aria-hidden="true">
+<div *ngIf='!characterService.isBusyCharacterList && characterService.characters' class="modal fade" id="characterModal"
+    tabindex="-1" role="dialog" aria-labelledby="characterModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="characterModalLabel">
-                    <span *ngIf='characterService.selectedCharacter && !isBusyCharacter'>{{ characterService.selectedCharacter.name }}</span>
+                    <span
+                        *ngIf='characterService.selectedCharacter && !isBusyCharacter'>{{ characterService.selectedCharacter.name }}</span>
                     <span *ngIf='!characterService.selectedCharacter'>Character detail</span>
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)='characterService.clearCharacter()'>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)='characterService.clearCharacter()'>
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf='characterService.selectedCharacter && !characterService.isBusyCharacter'> -->
+                <div *ngIf='characterService.selectedCharacter && !characterService.isBusyCharacter'>
                     <!-- make tabs with basic info, comics, series, stories, events -->
                     <div class="row">
                         <div class="col">
@@ -21,7 +23,8 @@
                                 [alt]='characterService.selectedCharacter.name'>
                         </div>
                         <div class="col">
-                            <p *ngIf='characterService.selectedCharacter.description' [innerHTML]='characterService.selectedCharacter.description'></p>
+                            <p *ngIf='characterService.selectedCharacter.description'
+                                [innerHTML]='characterService.selectedCharacter.description'></p>
 
                             <p *ngIf='!characterService.selectedCharacter.description'>
                                 <em>This character does not have a description.</em>
@@ -42,13 +45,14 @@
                 </div>
 
                 <div *ngIf='!characterService.selectedCharacter'>
-                    Loading character information...
+                    <img class="loading" src="assets/images/loading.gif" alt="Loading...">
                 </div>
 
                 <!-- handle error -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)='characterService.clearCharacter()'>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)='characterService.clearCharacter()'>
                     Close
                 </button>
             </div>

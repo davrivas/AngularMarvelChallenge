@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CharacterResponse, Result as Character } from '../../model/character';
+import { CharacterResponse, Result as Character } from '../model/character';
 import { ChallengeService } from '../../shared/services/challenge.service';
 
 @Injectable({
@@ -11,9 +11,9 @@ export class CharacterService {
     characters: Character[];
     selectedCharacter: Character;
 
-    isBusyCharacterList: boolean;
-    isBusyLoadingMore: boolean;
-    isBusyCharacter: boolean;
+    isBusyCharacterList: boolean = false;
+    isBusyLoadingMore: boolean = false;
+    isBusyCharacter: boolean = false;
     results: string;
 
     search: string;
