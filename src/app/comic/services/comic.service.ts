@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ChallengeService } from '../../shared/services/challenge.service';
-import { ComicResponse, Result as Comic } from '../model/comic';
+import { ComicResponse, Comic } from '../model/comic';
 
 @Injectable({
     providedIn: 'root'

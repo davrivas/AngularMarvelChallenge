@@ -1,7 +1,7 @@
 import { OnInit, Component, Input } from '@angular/core';
 import { CharacterService } from 'src/app/character/services/character.service';
 import { ComicService } from 'src/app/comic/services/comic.service';
-import { Result as Character } from 'src/app/character/model/character';
+import { Character } from 'src/app/character/model/character';
 
 @Component({
     selector: 'amc-character-list-item',

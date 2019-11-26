@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CharacterResponse, Result as Character } from '../model/character';
+import { CharacterResponse, Character } from '../model/character';
 import { ChallengeService } from '../../shared/services/challenge.service';
 
 @Injectable({

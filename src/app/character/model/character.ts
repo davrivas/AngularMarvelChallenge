@@ -57,7 +57,7 @@ export interface Url {
     url: string;
 }
 
-export interface Result {
+export interface Character {
     id: number;
     name: string;
     description: string;
@@ -76,7 +76,7 @@ export interface Data {
     limit: number;
     total: number;
     count: number;
-    results: Result[];
+    results: Character[];
 }
 
 export interface CharacterResponse {

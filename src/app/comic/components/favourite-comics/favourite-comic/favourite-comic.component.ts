@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ComicService } from 'src/app/comic/services/comic.service';
-import { Result as Comic } from 'src/app/comic/model/comic';
+import { Comic } from 'src/app/comic/model/comic';
 
 @Component({
     selector: 'amc-favourite-comic',

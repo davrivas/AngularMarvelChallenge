@@ -89,7 +89,7 @@ export interface Events {
     returned: number;
 }
 
-export interface Result {
+export interface Comic {
     id: number;
     digitalId: number;
     title: string;
@@ -126,7 +126,7 @@ export interface Data {
     limit: number;
     total: number;
     count: number;
-    results: Result[];
+    results: Comic[];
 }
 
 export interface ComicResponse {
