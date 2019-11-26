@@ -3,6 +3,11 @@
     overflow-y: scroll;
 }
 
+.btn-red {
+    background-color: #ed1f26;
+    color: #fff;
+}
+
 .comic-item {
     cursor: pointer;
 }

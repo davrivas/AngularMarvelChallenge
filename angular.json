@@ -20,11 +20,11 @@
                         "tsConfig": "tsconfig.app.json",
                         "aot": false,
                         "assets": [
-                            "src/favicon.ico",
                             "src/assets"
                         ],
                         "styles": [
-                            "src/styles.css"
+                            "src/assets/css/styles.css",
+                            "src/assets/css/loading.css"
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.min.js",

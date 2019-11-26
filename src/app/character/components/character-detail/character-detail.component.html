@@ -10,7 +10,7 @@
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                     (click)='characterService.clearCharacter()'>
-                    <span aria-hidden="true">&times;</span>
+                    <img src="assets/images/icons/btn-close.png" alt="Close button">
                 </button>
             </div>
             <div class="modal-body">
@@ -46,15 +46,10 @@
 
                 <div *ngIf='!characterService.selectedCharacter'>
                     <img class="loading" src="assets/images/loading.gif" alt="Loading...">
+                    <p class="text-center">Loading...</p>
                 </div>
 
                 <!-- handle error -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    (click)='characterService.clearCharacter()'>
-                    Close
-                </button>
             </div>
         </div>
     </div>

@@ -1,18 +1,28 @@
-<div class="row">
-    <img src="assets/images/icons/btn-favourites-primary.png" alt="Characters icon" width="30" height="30" class="mr-1">
-    <h3>My favourites ({{ !comicService.favouriteComics ? 0 : comicService.favouriteComics.length }})</h3>
-</div>
+<div class="modal fade" id="favouritesModal" tabindex="-1" role="dialog" aria-labelledby="favouritesModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="assets/images/icons/btn-favourites-primary.png" alt="Characters icon" width="30" height="30"
+                    class="mr-1">
+                <h5 class="modal-title" id="favouritesModalLabel">
+                    My favourites ({{ !comicService.favouriteComics ? 0 : comicService.favouriteComics.length }})
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)='comicService.clearComic()'>
+                    <img src="assets/images/icons/btn-close.png" alt="Close button">
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf='comicService.favouriteComics' class='row'>
+                    <amc-favourite-comic *ngFor='let favouriteComic of comicService.favouriteComics' class="col-4 mb-3"
+                        [comicService]='comicService' [favouriteComic]='favouriteComic'></amc-favourite-comic>
+                </div>
 
-<div *ngIf='comicService.favouriteComics' class='row'>
-    <div *ngFor='let favouriteComic of comicService.favouriteComics' class="col-lg-6 mb-3">
-        <img src="{{favouriteComic.thumbnail.path}}.{{favouriteComic.thumbnail.extension}}" [alt]='favouriteComic.title'
-            class="img-fluid comic-thumbnail">
-        <img src="assets/images/icons/btn-delete.png" alt="Delete {{favouriteComic.title}} from favourites"
-            class="delete-button" title="Delete {{favouriteComic.title}} from favourites"
-            (click)='comicService.removeFavourite(favouriteComic.id)'>
+                <div *ngIf='!comicService.favouriteComics || comicService.favouriteComics.length === 0'>
+                    <p class="text-center">You don't have any favourite comics</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-<div *ngIf='!comicService.favouriteComics || comicService.favouriteComics.length === 0'>
-    <p class="text-center">You don't have any favourite comics</p>
 </div>

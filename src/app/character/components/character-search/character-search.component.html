@@ -9,18 +9,22 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="col-12">
-            <div class="row">
-                <div class="col-11">
-                    <input class="form-control" placeholder="Search characters..." aria-label="Search"
-                        [(ngModel)]='characterService.search'>
+        <div class="d-flex align-items-middle">
+            <input class="form-control input-search" placeholder="Search characters..." aria-label="Search"
+                [(ngModel)]='characterService.search'
+                [disabled]='characterService.isBusyCharacterList || characterService.isBusyLoadingMore'>
+            <button class="btn btn-dark ml-1 mr-1" (click)='characterService.searchCharactersByName()'
+                [disabled]='characterService.isBusyCharacterList || characterService.isBusyLoadingMore || characterService.searchEqualsNameStartsWith()'>
+                <img src="assets/images/icons/search.png" alt="Search icon" width="30" width="30">
+            </button>
+            <button class="btn btn-dark btn-favourites align-self-end" data-target="#favouritesModal"
+                data-toggle="modal" title="Favourite comics">
+                <div class="d-flex flex-row align-items-middle">
+                    <img src="assets/images/icons/btn-favourites-primary.png" alt="Favourties icon" width="30"
+                        width="30" class="mr-1">
+                    {{ !comicService.favouriteComics ? 0 : comicService.favouriteComics.length }}
                 </div>
-                <div class="col-1">
-                    <button class="btn btn-dark" (click)='characterService.searchCharactersByName()'>
-                        <img src="assets/images/icons/search.png" alt="Search icon" width="30" width="30">
-                    </button>
-                </div>
-            </div>
+            </button>
         </div>
     </div>
 </nav>

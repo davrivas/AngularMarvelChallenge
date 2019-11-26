@@ -1,0 +1,17 @@
+.btn-add,
+.btn-remove,
+.btn-buy {
+    background-color: #dcdcdc;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .75em;
+}
+
+.btn-remove {
+    background-color: #322827;
+    color: #ed1f26;
+}
+
+.btn-buy {
+    color: #ed1f26;
+}

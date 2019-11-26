@@ -85,6 +85,18 @@ export class CharacterService {
         this.searchCharacters(false);
     }
 
+    searchEqualsNameStartsWith(): boolean {
+        if (this.challengeService.IsNullOrWhiteSpace(this.search)) {
+            this.search = '';
+        }
+
+        if (this.challengeService.IsNullOrWhiteSpace(this.nameStartsWith)) {
+            this.nameStartsWith = '';
+        }
+
+        return this.search === this.nameStartsWith;
+    }
+
     onOrderByChange(value: string): void {
         this.characters = null;
         this.orderBy = value;
@@ -120,6 +132,10 @@ export class CharacterService {
 
     hasMoreCharacters(): boolean {
         return this.characters.length <= this.total - 1;
+    }
+
+    hasReachedTheEnd(): boolean {
+        return this.total > this.challengeService.maxResults && !this.hasMoreCharacters();
     }
 
     loadMoreCharacters(): void {

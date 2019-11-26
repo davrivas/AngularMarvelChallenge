@@ -1,23 +1,24 @@
-<amc-character-search [characterService]='characterService'></amc-character-search>
+<amc-character-search [characterService]='characterService' [comicService]='comicService'></amc-character-search>
 
-<div class='container'>
-    <div class="row mb-3">
-        <div class="col-md-9">
-            <amc-character-list [characterService]='characterService' [comicService]='comicService'>
-            </amc-character-list>
-        </div>
-        <div class="col-md-3">
-            <amc-favourite-comics [comicService]='comicService'></amc-favourite-comics>
-        </div>
-    </div>
-
-    <footer class="bg-dark text-light p-2 pt-3">
-        <p class="text-center">
-            Made by David Rivas<br>
-            Data provided by Marvel. &copy; 2014-{{ date | date:'yyyy' }} Marvel
-        </p>
-    </footer>
+<div class='container mb-5'>
+    <amc-character-list [characterService]='characterService' [comicService]='comicService'>
+    </amc-character-list>
 </div>
+
+<div class="container mb-5">
+    &nbsp;
+</div>
+
+<footer class="footer bg-dark text-light">
+    <p class="text-center">
+        Made by David Rivas, <a href="https://pevaar.com/" class="text-light" target="_blank">Pevaar Software
+            Factory</a> | Data provided by <a href="https://developer.marvel.com/" class="text-light"
+            target="_blank">Marvel</a>. &copy; 2014-{{ date | date:'yyyy' }} <a href="https://developer.marvel.com/"
+            class="text-light" target="_blank">Marvel</a>
+    </p>
+</footer>
+
+<amc-favourite-comics [comicService]='comicService'></amc-favourite-comics>
 
 <amc-character-detail [characterService]='characterService'></amc-character-detail>
 

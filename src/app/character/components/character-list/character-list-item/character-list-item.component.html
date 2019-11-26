@@ -1,7 +1,7 @@
 <div class="row mb-2">
     <div class="col">
         <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}"
-            [alt]="character.name">
+            alt="{{character.name}} picture">
     </div>
 
     <div class="col">
@@ -15,7 +15,7 @@
             <em>This character does not have a description.</em>
         </p>
 
-        <button class="btn btn-primary" data-toggle="modal" data-target="#characterModal"
+        <button class="btn btn-red" data-toggle="modal" data-target="#characterModal"
             (click)='characterService.selectCharacter(character.resourceURI)'>
             View more
         </button>

@@ -1,0 +1,11 @@
+.loading {
+    width: 75px;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+.loaging-little {
+    width: 25px;
+    height: auto;
+}
