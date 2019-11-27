@@ -12,18 +12,14 @@ import { CharacterSearchComponent } from './character/components/character-searc
 import { ChallengeService } from './shared/services/challenge.service';
 import { CharacterService } from './character/services/character.service';
 import { ComicService } from './comic/services/comic.service';
-import { CharacterListItemComponent } from './character/components/character-list/character-list-item/character-list-item.component';
-import { FavouriteComicComponent } from './comic/components/favourite-comics/favourite-comic/favourite-comic.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CharacterSearchComponent,
     CharacterListComponent,
-    CharacterListItemComponent,
     CharacterDetailComponent,
     FavouriteComicsComponent,
-    FavouriteComicComponent,
     ComicDetailComponent
   ],
   imports: [

@@ -17,18 +17,56 @@
     </div>
 </div>
 
-<div *ngIf='!characterService.isBusyCharacterList'>
+<div *ngIf='!isBusyCharacterList'>
     <div *ngIf='characters'>
         <p [innerHTML]='results'></p>
 
         <div class='row'>
-            <amc-character-list-item *ngFor='let character of characters' class='col-lg-6 mb-3' [character]='character'
-                (selectCharacter)='onSelectCharacter($event)' (selectComic)='onSelectComic($event)'>
-            </amc-character-list-item>
+            <div *ngFor='let character of characters' class='col-lg-6 mb-3'>
+                <div class="row mb-2">
+                    <div class="col">
+                        <img class='img-fluid' src="{{character.thumbnail.path}}.{{character.thumbnail.extension}}"
+                            alt="{{character.name}} picture">
+                    </div>
+
+                    <div class="col">
+                        <h4>{{ character.name }}</h4>
+
+                        <p><em>Date: {{ character.modified | date }}</em></p>
+
+                        <p *ngIf='character.description' [innerHTML]='character.description'
+                            class="character-description"></p>
+
+                        <p *ngIf='!character.description'>
+                            <em>This character does not have a description.</em>
+                        </p>
+
+                        <button class="btn btn-red" data-toggle="modal" data-target="#characterModal"
+                            (click)='onSelectCharacter(character.resourceURI)'>
+                            View more
+                        </button>
+                    </div>
+                </div>
+
+                <h5>Related comics</h5>
+
+                <div *ngIf='character.comics.items.slice(0, 4).length > 0' class="row">
+                    <div class="col-6 mb-1" *ngFor='let comic of character.comics.items.slice(0, 4)'>
+                        <span class="comic-item" title="See details" data-toggle="modal" data-target="#comicModal"
+                            (click)='onSelectComic(comic.resourceURI)'>
+                            {{ comic.name }}
+                        </span>
+                    </div>
+                </div>
+
+                <div *ngIf='character.comics.items.slice(0, 4).length === 0'>
+                    <small>This character does not have any related comics</small>
+                </div>
+            </div>
         </div>
 
         <div *ngIf='hasMoreCharacters()' class="d-flex justify-content-center">
-            <button *ngIf='!isBusyLoadingMore' class="btn btn-secondary" (click)='onLoadMoreCharacters(0)'>
+            <button *ngIf='!isBusyLoadingMore' class="btn btn-red" (click)='onLoadMoreCharacters(0)'>
                 Load more characters
             </button>
 
@@ -37,9 +75,9 @@
             </div>
         </div>
 
-        <div *ngIf='hasReachedTheEnd()' class="d-flex justify-content-center">
+        <div *ngIf='!hasMoreCharacters()'>
             <hr>
-            <p class="text-muted">You have reached the end</p>
+            <p class="text-center text-secondary">You have reached the end</p>
         </div>
     </div>
 

@@ -14,9 +14,9 @@ export class AppComponent implements OnInit {
     // Character
     characters: Character[];
     selectedCharacter: Character;
-    isBusyCharacterList: boolean = false;
-    isBusyLoadingMore: boolean = false;
-    isBusyCharacter: boolean = false;
+    isBusyCharacterList: boolean;
+    isBusyLoadingMore: boolean;
+    isBusyCharacter: boolean;
     results: string;
     search: string;
     orderBy: string;
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     // Comic
     favouriteComics: Comic[];
     selectedComic: Comic;
-    isBusyComic: boolean = false;
+    isBusyComic: boolean;
 
     readonly date: Date;
 
@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
     onSearchCharactersByName(value: string): void {
         this.characters = null;
 
-        if (!this.challengeService.IsNullOrWhiteSpace(this.search)) {
+        if (!this.challengeService.IsNullOrWhiteSpace(value)) {
             this.search = value;
         } else {
             this.search = null;

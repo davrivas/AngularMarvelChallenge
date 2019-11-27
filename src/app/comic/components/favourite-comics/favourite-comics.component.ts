@@ -3,7 +3,8 @@ import { Comic } from '../../model/comic';
 
 @Component({
     selector: 'amc-favourite-comics',
-    templateUrl: './favourite-comics.component.html'
+    templateUrl: './favourite-comics.component.html',
+    styleUrls: ['./favourite-comics.component.css']
 })
 export class FavouriteComicsComponent {
     @Input() favouriteComics: Comic[];

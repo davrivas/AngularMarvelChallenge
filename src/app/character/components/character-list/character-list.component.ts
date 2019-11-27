@@ -4,7 +4,8 @@ import { ChallengeService } from 'src/app/shared/services/challenge.service';
 
 @Component({
     selector: 'amc-character-list',
-    templateUrl: './character-list.component.html'
+    templateUrl: './character-list.component.html',
+    styleUrls: ['./character-list.component.css']
 })
 export class CharacterListComponent {
     @Input() characters: Character[];
@@ -32,11 +33,8 @@ export class CharacterListComponent {
     }
 
     hasMoreCharacters(): boolean {
-        return this.characters.length <= this.total - 1;
-    }
-
-    hasReachedTheEnd(): boolean {
-        return this.total > this.challengeService.maxResults && !this.hasMoreCharacters();
+        const validation = this.characters.length <= this.total - 1;
+        return validation;
     }
 
     onSelectCharacter(value: string) {
