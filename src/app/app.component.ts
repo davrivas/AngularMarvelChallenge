@@ -33,6 +33,10 @@ export class AppComponent implements OnInit {
     constructor(private challengeService: ChallengeService,
                 private characterService: CharacterService,
                 private comicService: ComicService) {
+        this.isBusyCharacter = false;
+        this.isBusyCharacterList = false;
+        this.isBusyLoadingMore = false;
+        this.isBusyComic = false;
         this.date = new Date();
     }
 
@@ -163,6 +167,22 @@ export class AppComponent implements OnInit {
 
     onClearComic(value: any): void {
         this.selectedComic = null;
+    }
+
+    isFavourite(id: number): boolean {
+        if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
+            return false;
+        }
+
+        return this.favouriteComics.some(x => x.id === id);
+    }
+
+    onAddFavourite(comic: Comic): void {
+        if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
+            this.favouriteComics = [comic];
+        } else {
+            this.favouriteComics.push(comic);
+        }
     }
 
     onRemoveFavourite(id: number): void {

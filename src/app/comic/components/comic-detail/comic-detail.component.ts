@@ -15,11 +15,13 @@ export class ComicDetailComponent {
     @Input() isBusyCharacterList: boolean;
     @Input() isBusyComic: boolean;
 
+    @Output() addFavourite = new EventEmitter<Comic>();
     @Output() removeFavourite = new EventEmitter<number>();
     @Output() clearComic = new EventEmitter<any>();
 
     constructor(private challengeService: ChallengeService) {}
 
+    // check this
     isFavourite(id: number): boolean {
         if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
             return false;
@@ -28,12 +30,8 @@ export class ComicDetailComponent {
         return this.favouriteComics.some(x => x.id === id);
     }
 
-    addFavourite(comic: Comic): void {
-        if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
-            this.favouriteComics = [comic];
-        } else {
-            this.favouriteComics.push(comic);
-        }
+    onAddFavourite(value: Comic) {
+        this.addFavourite.emit(value);
     }
 
     onRemoveFavourite(value: number) {

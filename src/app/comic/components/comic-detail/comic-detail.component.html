@@ -50,7 +50,7 @@
             </div>
             <div *ngIf='!isBusyComic && selectedComic' class="modal-footer">
                 <button *ngIf='!isFavourite(selectedComic.id)' type="button" class="btn btn-block btn-add"
-                    (click)='addFavourite(selectedComic)'>
+                    (click)='onAddFavourite(selectedComic)'>
                     <img src="assets/images/icons/btn-favourites-default.png" alt="Add icon"> Add to favorites
                 </button>
                 <button *ngIf='isFavourite(selectedComic.id)' type="button" class="btn btn-block btn-remove"
