@@ -1,7 +1,12 @@
-<amc-character-search [characterService]='characterService' [comicService]='comicService'></amc-character-search>
+<amc-character-search [favouriteComics]='favouriteComics' [search]='search' [isBusyCharacterList]='isBusyCharacterList'
+    (searchByName)='onSearchCharactersByName($event)' [isBusyLoadingMore]='isBusyLoadingMore'>
+</amc-character-search>
 
 <div class='container mb-5'>
-    <amc-character-list [characterService]='characterService' [comicService]='comicService'>
+    <amc-character-list [characters]='characters' (orderByChange)='onOrderByChange($event)'
+        [isBusyCharacterList]='isBusyCharacterList' [isBusyLoadingMore]='isBusyLoadingMore' [total]='total'
+        (loadMoreCharacters)='onLoadMoreCharacters($event)' [results]='results' (selectComic)='selectComic($event)'
+        (selectCharacter)='selectCharacter($event)'>
     </amc-character-list>
 </div>
 
@@ -18,8 +23,12 @@
             class="text-light" target="_blank">Marvel</a></p>
 </footer>
 
-<amc-favourite-comics [comicService]='comicService'></amc-favourite-comics>
+<amc-favourite-comics [favouriteComics]='favouriteComics' (clearComic)='onClearComic(0)'
+    (removeFavourite)='onRemoveFavourite($event)'></amc-favourite-comics>
 
-<amc-character-detail [characterService]='characterService'></amc-character-detail>
+<amc-character-detail [characters]='characters' [isBusyCharacter]='isBusyCharacter'
+    [isBusyCharacterList]='isBusyCharacterList' [selectedCharacter]='selectedCharacter'
+    (onClearCharacter)='onClearCharacter(0)'></amc-character-detail>
 
-<amc-comic-detail [comicService]='comicService' [characterService]='characterService'></amc-comic-detail>
+<amc-comic-detail [favouriteComics]='favouriteComics' [characters]='characters' [selectedComic]='selectedComic'
+    [isBusyCharacterList]='isBusyCharacterList' (removeFavourite)='onRemoveFavourite($event)' (clearComic)='onClearComic(0)'></amc-comic-detail>

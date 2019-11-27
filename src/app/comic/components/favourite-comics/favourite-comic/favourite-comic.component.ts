@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ComicService } from 'src/app/comic/services/comic.service';
 import { Comic } from 'src/app/comic/model/comic';
 
@@ -8,6 +8,11 @@ import { Comic } from 'src/app/comic/model/comic';
     styleUrls: ['./favourite-comic.component.css']
 })
 export class FavouriteComicComponent {
-    @Input() comicService: ComicService;
     @Input() favouriteComic: Comic;
+
+    @Output() removeFavourite = new EventEmitter<string>();
+
+    onRemoveFavourite(value: string) {
+        this.removeFavourite.emit(value);
+    }
 }

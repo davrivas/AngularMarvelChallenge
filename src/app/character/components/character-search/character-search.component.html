@@ -11,10 +11,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <div class="d-flex align-items-middle">
             <input class="form-control input-search" placeholder="Search characters..." aria-label="Search"
-                [(ngModel)]='characterService.search'
-                [disabled]='characterService.isBusyCharacterList || characterService.isBusyLoadingMore'>
-            <button class="btn btn-dark ml-1 mr-1" (click)='characterService.searchCharactersByName()'
-                [disabled]='characterService.isBusyCharacterList || characterService.isBusyLoadingMore || characterService.searchEqualsNameStartsWith()'>
+                [(ngModel)]='nameStartsWith'
+                [disabled]='isBusyCharacterList || isBusyLoadingMore'>
+            <button class="btn btn-dark ml-1 mr-1" (click)='searchCharactersByName(nameStartsWith)'
+                [disabled]='isBusyCharacterList || isBusyLoadingMore || searchEqualsNameStartsWith()'>
                 <img src="assets/images/icons/search.png" alt="Search icon" width="30" width="30">
             </button>
             <button class="btn btn-dark btn-favourites align-self-end" data-target="#favouritesModal"
@@ -22,7 +22,7 @@
                 <div class="d-flex flex-row align-items-middle">
                     <img src="assets/images/icons/btn-favourites-primary.png" alt="Favourties icon" width="30"
                         width="30" class="mr-1">
-                    {{ !comicService.favouriteComics ? 0 : comicService.favouriteComics.length }}
+                    {{ !favouriteComics ? 0 : favouriteComics.length }}
                 </div>
             </button>
         </div>

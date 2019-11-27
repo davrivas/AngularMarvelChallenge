@@ -1,65 +1,65 @@
-<div *ngIf='!comicService.isBusyCharacterList && characterService.characters' class="modal fade" id="comicModal"
-    tabindex="-1" role="dialog" aria-labelledby="comicModalLabel" aria-hidden="true">
+<div *ngIf='!isBusyCharacterList && characters' class="modal fade" id="comicModal" tabindex="-1" role="dialog"
+    aria-labelledby="comicModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="comicModalLabel">
-                    <span *ngIf='comicService.selectedComic'>
-                        {{ comicService.selectedComic.title }}
+                    <span *ngIf='selectedComic'>
+                        {{ selectedComic.title }}
                     </span>
-                    <span *ngIf='!comicService.selectedComic'>
+                    <span *ngIf='!selectedComic'>
                         Comic detail
                     </span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    (click)='comicService.clearComic()'>
+                    (click)='onClearComic(0)'>
                     <img src="assets/images/icons/btn-close.png" alt="Close button">
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf='!comicService.isBusyComic'>
-                    <div *ngIf='comicService.selectedComic'>
+                <div *ngIf='!isBusyComic'>
+                    <div *ngIf='selectedComic'>
                         <!-- make tabs with basic info, advanced info and more... -->
                         <div class="row">
                             <div class="col">
                                 <img class='img-fluid'
-                                    src="{{comicService.selectedComic.thumbnail.path}}.{{comicService.selectedComic.thumbnail.extension}}"
-                                    [alt]='comicService.selectedComic.title'>
+                                    src="{{selectedComic.thumbnail.path}}.{{selectedComic.thumbnail.extension}}"
+                                    [alt]='selectedComic.title'>
                             </div>
                             <div class="col">
-                                <p *ngIf='comicService.selectedComic.description'
-                                    [innerHTML]='comicService.selectedComic.description'></p>
+                                <p *ngIf='selectedComic.description' [innerHTML]='selectedComic.description'></p>
 
-                                <p *ngIf='!comicService.selectedComic.description'>
+                                <p *ngIf='!selectedComic.description'>
                                     <em>This character does not have a description.</em>
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div *ngIf='!comicService.selectedComic'></div>
+                    <div *ngIf='!selectedComic'>
+                        An error occured
+                    </div>
                 </div>
 
-                <div *ngIf='comicService.isBusyComic'>
+                <div *ngIf='isBusyComic'>
                     <img class="loading" src="assets/images/loading.gif" alt="Loading...">
                     <p class="text-center">Loading...</p>
                 </div>
 
                 <!-- handle error -->
             </div>
-            <div *ngIf='!comicService.isBusyComic && comicService.selectedComic' class="modal-footer">
-                <button *ngIf='!comicService.isFavourite(comicService.selectedComic.id)' type="button"
-                    class="btn btn-block btn-add" (click)='comicService.addFavourite(comicService.selectedComic)'>
+            <div *ngIf='!isBusyComic && selectedComic' class="modal-footer">
+                <button *ngIf='!isFavourite(selectedComic.id)' type="button" class="btn btn-block btn-add"
+                    (click)='addFavourite(selectedComic)'>
                     <img src="assets/images/icons/btn-favourites-default.png" alt="Add icon"> Add to favorites
                 </button>
-                <button *ngIf='comicService.isFavourite(comicService.selectedComic.id)' type="button"
-                    class="btn btn-block btn-remove"
-                    (click)='comicService.removeFavourite(comicService.selectedComic.id)'>
+                <button *ngIf='isFavourite(selectedComic.id)' type="button" class="btn btn-block btn-remove"
+                    (click)='onRemoveFavourite(selectedComic.id)'>
                     <img src="assets/images/icons/btn-favourites-primary.png" alt="Remove icon"> Added to favorites
                 </button>
                 <button type="button" class="btn btn-block btn-buy ml-1">
                     <img src="assets/images/icons/shopping-cart-primary.png" alt="Remove icon"> Buy for
-                    {{ comicService.selectedComic.prices[0].price | currency }}
+                    {{ selectedComic.prices[0].price | currency }}
                 </button>
             </div>
         </div>

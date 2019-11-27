@@ -6,8 +6,8 @@
         </div>
     </div>
     <div class="col">
-        <select class="form-control" (change)='characterService.onOrderByChange($event.target.value)'
-            [disabled]='characterService.isBusyCharacterList || characterService.isBusyLoadingMore'>
+        <select class="form-control" (change)='onOrderByChange($event.target.value)'
+            [disabled]='isBusyCharacterList || isBusyLoadingMore'>
             <option value>Sort by</option>
             <option value="name">Name ascending</option>
             <option value="-name">Name descending</option>
@@ -18,38 +18,37 @@
 </div>
 
 <div *ngIf='!characterService.isBusyCharacterList'>
-    <div *ngIf='characterService.characters'>
-        <p [innerHTML]='characterService.results'></p>
+    <div *ngIf='characters'>
+        <p [innerHTML]='results'></p>
 
         <div class='row'>
-            <amc-character-list-item *ngFor='let character of characterService.characters' class='col-lg-6 mb-3'
-                [comicService]='comicService' [characterService]='characterService' [character]='character'>
+            <amc-character-list-item *ngFor='let character of characters' class='col-lg-6 mb-3' [character]='character'
+                (selectCharacter)='onSelectCharacter($event)' (selectComic)='onSelectComic($event)'>
             </amc-character-list-item>
         </div>
 
-        <div *ngIf='characterService.hasMoreCharacters()' class="d-flex justify-content-center">
-            <button *ngIf='!characterService.isBusyLoadingMore' class="btn btn-secondary"
-                (click)='characterService.loadMoreCharacters()'>
+        <div *ngIf='hasMoreCharacters()' class="d-flex justify-content-center">
+            <button *ngIf='!isBusyLoadingMore' class="btn btn-secondary" (click)='onLoadMoreCharacters(0)'>
                 Load more characters
             </button>
 
-            <div *ngIf='characterService.isBusyLoadingMore'>
+            <div *ngIf='isBusyLoadingMore'>
                 <img class="loading loaging-little" src="assets/images/loading.gif" alt="Loading...">
             </div>
         </div>
 
-        <div *ngIf='characterService.hasReachedTheEnd()' class="d-flex justify-content-center">
+        <div *ngIf='hasReachedTheEnd()' class="d-flex justify-content-center">
             <hr>
             <p class="text-muted">You have reached the end</p>
         </div>
     </div>
 
-    <div *ngIf='!characterService.characters || characterService.characters.length === 0'>
+    <div *ngIf='!characters || characters.length === 0'>
         <p class="text-center">There are no characters</p>
     </div>
 </div>
 
-<div *ngIf='characterService.isBusyCharacterList' class="mt-3">
+<div *ngIf='isBusyCharacterList' class="mt-3">
     <img class="loading" src="assets/images/loading.gif" alt="Loading...">
     <p class="text-center">Loading...</p>
 </div>

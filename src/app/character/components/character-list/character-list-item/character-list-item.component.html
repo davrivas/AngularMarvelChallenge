@@ -16,7 +16,7 @@
         </p>
 
         <button class="btn btn-red" data-toggle="modal" data-target="#characterModal"
-            (click)='characterService.selectCharacter(character.resourceURI)'>
+            (click)='onSelectCharacter(character.resourceURI)'>
             View more
         </button>
     </div>
@@ -27,7 +27,7 @@
 <div *ngIf='character.comics.items.slice(0, 4).length > 0' class="row">
     <div class="col-6 mb-1" *ngFor='let comic of character.comics.items.slice(0, 4)'>
         <span class="comic-item" title="See details" data-toggle="modal" data-target="#comicModal"
-            (click)='comicService.selectComic(comic.resourceURI)'>
+            (click)='onSelectComic(comic.resourceURI)'>
             {{ comic.name }}
         </span>
     </div>

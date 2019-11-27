@@ -1,10 +1,21 @@
-import { Component, Input } from '@angular/core';
-import { ComicService } from '../../services/comic.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Comic } from '../../model/comic';
 
 @Component({
     selector: 'amc-favourite-comics',
     templateUrl: './favourite-comics.component.html'
 })
 export class FavouriteComicsComponent {
-    @Input() comicService: ComicService;
+    @Input() favouriteComics: Comic[];
+
+    @Output() clearComic = new EventEmitter<any>();
+    @Output() removeFavourite = new EventEmitter<number>();
+
+    onClearComic(value: any) {
+        this.clearComic.emit(value);
+    }
+
+    onRemoveFavourite(value: number) {
+        this.removeFavourite.emit(value);
+    }
 }

@@ -2,5 +2,5 @@
     class="img-fluid comic-thumbnail">
 <img src="assets/images/icons/btn-delete.png" alt="Delete {{favouriteComic.title}} from favourites"
     class="delete-button" title="Delete {{favouriteComic.title}} from favourites"
-    (click)='comicService.removeFavourite(favouriteComic.id)'>
+    (click)='onRemoveFavourite(favouriteComic.id)'>
 <small>{{ favouriteComic.title }}</small>

@@ -1,50 +1,54 @@
-<div *ngIf='!characterService.isBusyCharacterList && characterService.characters' class="modal fade" id="characterModal"
-    tabindex="-1" role="dialog" aria-labelledby="characterModalLabel" aria-hidden="true">
+<div *ngIf='!isBusyCharacterList && characters' class="modal fade" id="characterModal" tabindex="-1" role="dialog"
+    aria-labelledby="characterModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="characterModalLabel">
-                    <span
-                        *ngIf='characterService.selectedCharacter && !isBusyCharacter'>{{ characterService.selectedCharacter.name }}</span>
-                    <span *ngIf='!characterService.selectedCharacter'>Character detail</span>
+                    <span *ngIf='selectedCharacter && !isBusyCharacter'>{{ selectedCharacter.name }}</span>
+                    <span *ngIf='!selectedCharacter'>Character detail</span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    (click)='characterService.clearCharacter()'>
+                    (click)='onClearCharacter(0)'>
                     <img src="assets/images/icons/btn-close.png" alt="Close button">
                 </button>
             </div>
             <div class="modal-body">
-                <div *ngIf='characterService.selectedCharacter && !characterService.isBusyCharacter'>
-                    <!-- make tabs with basic info, comics, series, stories, events -->
-                    <div class="row">
-                        <div class="col">
-                            <img class="img-fluid"
-                                src="{{characterService.selectedCharacter.thumbnail.path}}.{{characterService.selectedCharacter.thumbnail.extension}}"
-                                [alt]='characterService.selectedCharacter.name'>
-                        </div>
-                        <div class="col">
-                            <p *ngIf='characterService.selectedCharacter.description'
-                                [innerHTML]='characterService.selectedCharacter.description'></p>
+                <div *ngIf='!isBusyCharacter'>
+                    <div *ngIf='selectedCharacter'>
+                        <!-- make tabs with basic info, comics, series, stories, events -->
+                        <div class="row">
+                            <div class="col">
+                                <img class="img-fluid"
+                                    src="{{selectedCharacter.thumbnail.path}}.{{selectedCharacter.thumbnail.extension}}"
+                                    [alt]='selectedCharacter.name'>
+                            </div>
+                            <div class="col">
+                                <p *ngIf='selectedCharacter.description' [innerHTML]='selectedCharacter.description'>
+                                </p>
 
-                            <p *ngIf='!characterService.selectedCharacter.description'>
-                                <em>This character does not have a description.</em>
-                            </p>
+                                <p *ngIf='!selectedCharacter.description'>
+                                    <em>This character does not have a description.</em>
+                                </p>
+                            </div>
+                        </div>
+                        <div *ngIf='selectedCharacter.urls'>
+                            <h6>Urls</h6>
+                            <ul>
+                                <li *ngFor='let url of selectedCharacter.urls'>
+                                    <a [href]='url.url' target="_blank"
+                                        title="See {{ selectedCharacter.name}}'s {{ url.type }}">
+                                        {{ url.type }}
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div *ngIf='characterService.selectedCharacter.urls'>
-                        <h6>Urls</h6>
-                        <ul>
-                            <li *ngFor='let url of characterService.selectedCharacter.urls'>
-                                <a [href]='url.url' target="_blank"
-                                    title="See {{ characterService.selectedCharacter.name}}'s {{ url.type }}">
-                                    {{ url.type }}
-                                </a>
-                            </li>
-                        </ul>
+                    <div *ngIf='!selectedCharacter'>
+                        An error occured
                     </div>
                 </div>
 
-                <div *ngIf='!characterService.selectedCharacter'>
+                <div *ngIf='isBusyCharacter && !selectedCharacter'>
                     <img class="loading" src="assets/images/loading.gif" alt="Loading...">
                     <p class="text-center">Loading...</p>
                 </div>
