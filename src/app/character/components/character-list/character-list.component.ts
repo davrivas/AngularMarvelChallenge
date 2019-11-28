@@ -33,8 +33,7 @@ export class CharacterListComponent {
     }
 
     hasMoreCharacters(): boolean {
-        const validation = this.characters.length <= this.total - 1;
-        return validation;
+        return this.characters.length <= this.total - 1;
     }
 
     onSelectCharacter(value: string) {

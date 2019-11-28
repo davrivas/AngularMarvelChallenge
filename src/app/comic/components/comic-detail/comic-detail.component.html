@@ -49,16 +49,16 @@
                 <!-- handle error -->
             </div>
             <div *ngIf='!isBusyComic && selectedComic' class="modal-footer">
-                <button *ngIf='!isFavourite(selectedComic.id)' type="button" class="btn btn-block btn-add"
+                <button *ngIf='!isFavourite' type="button" class="btn btn-block btn-add"
                     (click)='onAddFavourite(selectedComic)'>
                     <img src="assets/images/icons/btn-favourites-default.png" alt="Add icon"> Add to favorites
                 </button>
-                <button *ngIf='isFavourite(selectedComic.id)' type="button" class="btn btn-block btn-remove"
+                <button *ngIf='isFavourite' type="button" class="btn btn-block btn-remove"
                     (click)='onRemoveFavourite(selectedComic.id)'>
                     <img src="assets/images/icons/btn-favourites-primary.png" alt="Remove icon"> Added to favorites
                 </button>
                 <button type="button" class="btn btn-block btn-buy ml-1">
-                    <img src="assets/images/icons/shopping-cart-primary.png" alt="Remove icon"> Buy for
+                    <img src="assets/images/icons/shopping-cart-primary.png" alt="Buy for icon"> Buy for
                     {{ selectedComic.prices[0].price | currency }}
                 </button>
             </div>

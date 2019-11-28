@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
     favouriteComics: Comic[];
     selectedComic: Comic;
     isBusyComic: boolean;
+    isFavourite: boolean;
 
     readonly date: Date;
 
@@ -156,6 +157,13 @@ export class AppComponent implements OnInit {
         this.comicService.getComic(url).subscribe(
             result => {
                 this.selectedComic = result.data.results[0];
+
+                if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
+                    this.isFavourite = false;
+                } else {
+                    this.isFavourite = this.favouriteComics.some(x => x.id === this.selectedComic.id);
+                }
+
                 this.isBusyComic = false;
             },
             error => {
@@ -169,23 +177,18 @@ export class AppComponent implements OnInit {
         this.selectedComic = null;
     }
 
-    isFavourite(id: number): boolean {
-        if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
-            return false;
-        }
-
-        return this.favouriteComics.some(x => x.id === id);
-    }
-
     onAddFavourite(comic: Comic): void {
         if (this.challengeService.IsNullOrEmpty(this.favouriteComics)) {
             this.favouriteComics = [comic];
         } else {
             this.favouriteComics.push(comic);
         }
+
+        this.isFavourite = true;
     }
 
     onRemoveFavourite(id: number): void {
         this.favouriteComics = this.favouriteComics.filter(x => x.id !== id);
+        this.isFavourite = false;
     }
 }

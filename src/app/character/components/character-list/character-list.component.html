@@ -65,23 +65,27 @@
             </div>
         </div>
 
-        <div *ngIf='hasMoreCharacters()' class="d-flex justify-content-center">
+        <div *ngIf='hasMoreCharacters()' class="d-flex justify-content-center align-items-middle">
             <button *ngIf='!isBusyLoadingMore' class="btn btn-red" (click)='onLoadMoreCharacters(0)'>
                 Load more characters
             </button>
 
-            <div *ngIf='isBusyLoadingMore'>
+            <div *ngIf='isBusyLoadingMore && characters.length > 0'>
                 <img class="loading loaging-little" src="assets/images/loading.gif" alt="Loading...">
             </div>
         </div>
 
-        <div *ngIf='!hasMoreCharacters()'>
+        <div *ngIf='!hasMoreCharacters() && characters.length > 0' class="col-12">
             <hr>
-            <p class="text-center text-secondary">You have reached the end</p>
+            <div class="row d-flex justify-content-center align-items-center">
+                <img src="assets/images/icons/characters.png" alt="Characters icon" width="30" height="30">
+                You have reached the end
+            </div>
         </div>
     </div>
 
     <div *ngIf='!characters || characters.length === 0'>
+        <hr>
         <p class="text-center">There are no characters</p>
     </div>
 </div>

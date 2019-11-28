@@ -30,5 +30,6 @@
     [isBusyCharacterList]='isBusyCharacterList' [selectedCharacter]='selectedCharacter'
     (onClearCharacter)='onClearCharacter(0)'></amc-character-detail>
 
-<amc-comic-detail [characters]='characters' [selectedComic]='selectedComic'
-    [isBusyCharacterList]='isBusyCharacterList' (addFavourite)='onAddFavourite($event)' (removeFavourite)='onRemoveFavourite($event)' (clearComic)='onClearComic(0)'></amc-comic-detail>
+<amc-comic-detail [characters]='characters' [selectedComic]='selectedComic' [isBusyCharacterList]='isBusyCharacterList'
+    [isFavourite]='isFavourite' (addFavourite)='onAddFavourite($event)' (removeFavourite)='onRemoveFavourite($event)'
+    (clearComic)='onClearComic(0)'></amc-comic-detail>
