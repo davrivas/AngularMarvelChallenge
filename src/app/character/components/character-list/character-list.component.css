@@ -3,6 +3,11 @@
     overflow-y: scroll;
 }
 
+.loaging-little {
+    width: 25px;
+    height: auto;
+}
+
 .btn-red {
     background-color: #ed1f26;
     color: #fff;
