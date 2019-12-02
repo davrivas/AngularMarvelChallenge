@@ -15,35 +15,70 @@
             <div class="modal-body">
                 <div *ngIf='!isBusyCharacter'>
                     <div *ngIf='selectedCharacter'>
-                        <!-- make tabs with basic info, comics, series, stories, events -->
-                        <div class="row">
-                            <div class="col">
-                                <img class="img-fluid"
-                                    src="{{selectedCharacter.thumbnail.path}}.{{selectedCharacter.thumbnail.extension}}"
-                                    [alt]='selectedCharacter.name'>
-                            </div>
-                            <div class="col">
-                                <p *ngIf='selectedCharacter.description' [innerHTML]='selectedCharacter.description'>
-                                </p>
+                        <ul class="nav nav-tabs" id="characterTabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="basic-details-tab" data-toggle="tab" href="#basic-details"
+                                    role="tab" aria-controls="basic-details" aria-selected="true">Basic details</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                <a class="nav-link" id="comics-tab" data-toggle="tab" href="#comics" role="tab"
+                                    aria-controls="comics" aria-selected="false">Comics</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="series-tab" data-toggle="tab" href="#series" role="tab"
+                                    aria-controls="series" aria-selected="false">Series</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="events-tab" data-toggle="tab" href="#events" role="tab"
+                                    aria-controls="events" aria-selected="false">Events</a>
+                            </li> -->
+                            <li *ngIf='selectedCharacter.urls' class="nav-item">
+                                <a class="nav-link" id="urls-tab" data-toggle="tab" href="#urls" role="tab"
+                                    aria-controls="urls" aria-selected="false">Urls</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="basic-details" role="tabpanel"
+                                aria-labelledby="basic-details-tab">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="img-fluid"
+                                            src="{{selectedCharacter.thumbnail.path}}.{{selectedCharacter.thumbnail.extension}}"
+                                            [alt]='selectedCharacter.name'>
+                                    </div>
+                                    <div class="col">
+                                        <p *ngIf='selectedCharacter.description'
+                                            [innerHTML]='selectedCharacter.description'>
+                                        </p>
 
-                                <p *ngIf='!selectedCharacter.description'>
-                                    <em>This character does not have a description.</em>
-                                </p>
+                                        <p *ngIf='!selectedCharacter.description'>
+                                            <em>This character does not have a description.</em>
+                                        </p>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                        <div *ngIf='selectedCharacter.urls'>
-                            <h6>Urls</h6>
-                            <ul>
-                                <li *ngFor='let url of selectedCharacter.urls'>
-                                    <a [href]='url.url' target="_blank"
-                                        title="See {{ selectedCharacter.name}}'s {{ url.type }}">
-                                        {{ url.type }}
-                                    </a>
-                                </li>
-                            </ul>
+                            <!-- <div class="tab-pane fade" id="comics" role="tabpanel" aria-labelledby="comics-tab">...
+                            </div>
+                            <div class="tab-pane fade" id="series" role="tabpanel" aria-labelledby="series-tab">...
+                            </div>
+                            <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">...
+                            </div> -->
+                            <div *ngIf='selectedCharacter.urls' class="tab-pane fade" id="urls" role="tabpanel"
+                                aria-labelledby="urls-tab">
+                                <h6>Urls</h6>
+                                <ul>
+                                    <li *ngFor='let url of selectedCharacter.urls'>
+                                        <a [href]='url.url' target="_blank"
+                                            title="See {{ selectedCharacter.name }}'s {{ url.type }}">
+                                            {{ url.type }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div *ngIf='!selectedCharacter'>
+                    <div *ngIf='!selectedCharacter && !isBusyCharacter'>
                         An error occured
                     </div>
                 </div>
@@ -52,8 +87,6 @@
                     <img class="loading" src="assets/images/loading.gif" alt="Loading...">
                     <p class="text-center">Loading...</p>
                 </div>
-
-                <!-- handle error -->
             </div>
         </div>
     </div>
